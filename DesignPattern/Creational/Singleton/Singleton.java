@@ -18,6 +18,9 @@ final class SingletonObj{
             if(object==null){
                 object=new SingletonObj();
             }
+            else{
+                System.out.println("Master branch already created.");
+            }
             return object;
         }
     }
@@ -43,7 +46,7 @@ public class Singleton{
     static class secondThread implements Runnable {
         public void run(){
             SingletonObj second=SingletonObj.getMasterBranch();
-            System.out.println("Master Branch2 "+second.name);
+            System.out.println("Master Branch "+second.name);
         }
         
     }

@@ -1,47 +1,50 @@
 package Factory;
 import java.util.*;
 
+import Factory.createmsg.sendEmail;
+import Factory.createmsg.sendMSG;
+import Factory.createmsg.sendSMS;
+
 public class Main {
-    private static sendMSG obj;
     public static void main(String[] args) {
         
         Scanner sc=new Scanner(System.in);
+        enum Choice {SMS, EMAIL};
+        System.out.print("Enter your choice(SMS/EMAIL) :");
+        String choice=sc.nextLine().toUpperCase();
 
-        System.out.print("Enter message to be sent: ");
-        String msg=sc.next();
-        sc.nextLine();
+        Choice userChoice;
 
-        System.out.println("Enter From address: ");
-        String from=sc.next();
-
-        System.out.println("Enter To address: ");
-        String to=sc.next();
-
-        System.out.println("Enter your choice:(SMS/Email)");
-        String choice=sc.next();
-
-        if(choice.equalsIgnoreCase("SMS")){
-            obj=new sendSMS();
-        }
-        else if(choice.equalsIgnoreCase("Email")){
-            System.out.print("Enter Subject: ");
-            String subject=sc.next();
-            sendEmail.sub=subject;
-            obj=new sendEmail();
-        }
-        else{
+        try {
+            userChoice=Choice.valueOf(choice);
+        } catch (IllegalArgumentException e) {
             System.out.println("Invalid choice");
+            sc.close();
+            return;
         }
+        sendMSG msg;
+
+        switch (userChoice) {
+            case SMS:
+                msg=new sendSMS();
+                msg.createMSG();
+                break;
+
+            case EMAIL:
+                msg=new sendEmail();
+                msg.createMSG();
+                break;
+        
+            default:
+                break;
+        }
+
         sc.close();
 
-        obj.createBody(msg,from,to);
-        obj.display();
 
     }
 
-    static void display(){
-        System.out.println("Message Sent!");
-    }
+        
     
 }
 

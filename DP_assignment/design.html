@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image with Thick Line</title>
+    <style>
+        .image-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .image-container::before,
+        .image-container::after {
+            content: '';
+            flex: 1;
+            border-top: 6px solid rgb(126, 27, 27); /* Thick line */
+            margin: 0 10px;
+        }
+
+        .image-container img {
+            filter: brightness(0) saturate(100%) invert(18%) sepia(77%) saturate(570%) hue-rotate(341deg) brightness(94%) contrast(96%);
+            width: 350px; /* Adjust image size */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="image-container">
+        <img src="Screenshot 2024-09-23 131337.png" alt="Decorative Image">
+    </div>
+
+</body>
+</html>

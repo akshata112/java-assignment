@@ -1,27 +1,49 @@
 package AbstractFactory;
 import java.util.*;
+import AbstractFactory.builder.*;
+import AbstractFactory.content.*;
+import AbstractFactory.pkg_footer.*;
+import AbstractFactory.pkg_header.*;
 
 public class Main {
-    private static documentBuilder object;
+    private static documentBuilder doc;
     public static void main(String[] args) {
-        Scanner in=new Scanner(System.in);
-        System.out.println("Enter your choice(HTML/Word Document) :");
-        String choice=in.nextLine();
+        enum Choice {HTML,WORD_DOC};
+        Scanner sc=new Scanner(System.in);
 
-        if(choice.equalsIgnoreCase("HTML")){
-            object=new htmlBuilder();
-        }
-        else if (choice.equalsIgnoreCase("Word Document")){
-            object=new wordDocBuilder();
+        System.out.print("Enter your choice(HTML/WORD_DOC) :");
+        String choice=sc.nextLine().toUpperCase();
+
+        Choice userChoice;
+
+        try {
+            userChoice=Choice.valueOf(choice);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid choice");
+            sc.close();
+            return;
         }
 
-        header head=object.defineHeader();
-        footer foot=object.defineFooter();
-        content cont=object.defineContent();
+        switch (userChoice) {
+            case HTML:
+                doc=new htmlBuilder();
+                break;
+        
+            case WORD_DOC:
+                doc=new wordDocBuilder();
+                break;
+
+            default:
+                break;
+        }
+
+        header head=doc.defineHeader();
+        footer foot=doc.defineFooter();
+        content cont=doc.defineContent();
 
         head.addHeader();
         cont.addContent();
         foot.addFooter();
-        in.close();
+        sc.close();
     }
 }
